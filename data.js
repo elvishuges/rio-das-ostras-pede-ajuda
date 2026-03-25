@@ -63,7 +63,7 @@ const mobilizacoes = [
         titulo: "Blitz Digital",
         local: "Online (Instagram)",
         mapa: "https://www.instagram.com/prefeituraderiodasostrasoficial/", // Link da rede social
-        descricao: "Comentários simultâneos exigindo respostas.",
+        descricao: "Comentários simultâneos no perfil do instagram do prefeito exigindo respostas.",
         icon: "fas fa-laptop",
     },
     {

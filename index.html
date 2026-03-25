@@ -41,7 +41,8 @@
             <i class="fas fa-bullhorn"></i>
           </div>
           <span class="text-xl font-extrabold tracking-tighter uppercase"
-            >Obras<span class="text-blue-600">Já</span></span
+            >Enseada das Gaovotas
+            <span class="text-blue-600"> Obras Já</span></span
           >
         </div>
         <div
@@ -119,41 +120,48 @@
             class="bg-white p-8 rounded-[2.5rem] shadow-2xl text-slate-900 border border-slate-100"
           >
             <div class="flex items-center justify-between mb-8">
-              <h3 class="font-bold text-xl tracking-tight">Status da Luta</h3>
+              <h3 class="font-bold text-xl tracking-tight uppercase italic">
+                Status da <span class="text-blue-600">Luta</span>
+              </h3>
               <span
-                class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-black"
-                >EM FOCO</span
+                class="inline-flex items-center gap-1.5 bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-[10px] font-black animate-pulse"
               >
+                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span> EM
+                FOCO
+              </span>
             </div>
 
             <div class="space-y-6">
-              <div class="flex justify-between items-end">
-                <span class="text-sm font-bold text-slate-500 uppercase"
-                  >Assinaturas Coletadas</span
-                >
-                <span class="text-2xl font-black text-blue-600">82%</span>
-              </div>
-              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full w-[82%] rounded-full"></div>
-              </div>
-
               <div class="grid grid-cols-2 gap-4 mt-8">
                 <div
-                  class="bg-slate-50 p-4 rounded-2xl border border-slate-100"
+                  class="bg-slate-50 p-5 rounded-3xl border border-slate-100 group hover:border-blue-200 transition-colors"
                 >
-                  <p class="text-2xl font-black text-slate-800">15</p>
-                  <p class="text-[10px] text-slate-400 font-bold uppercase">
-                    Ofícios Protocolados
+                  <div class="flex items-center gap-2">
+                    <p
+                      class="text-2xl font-black text-slate-800 group-hover:text-blue-600 transition-colors"
+                    >
+                      140
+                    </p>
+                    <i class="fab fa-whatsapp text-green-500 text-sm"></i>
+                  </div>
+                  <p
+                    class="text-[9px] text-slate-400 font-bold uppercase leading-tight tracking-widest mt-1"
+                  >
+                    Membros no Grupo
                   </p>
                 </div>
-                <div
-                  class="bg-slate-50 p-4 rounded-2xl border border-slate-100"
+              </div>
+
+              <div
+                class="bg-blue-600/5 border border-blue-600/10 p-4 rounded-2xl flex items-center justify-between"
+              >
+                <span
+                  class="text-[10px] font-bold text-blue-600 uppercase tracking-widest"
+                  >Enseada das Gaivotas</span
                 >
-                  <p class="text-2xl font-black text-slate-800">450+</p>
-                  <p class="text-[10px] text-slate-400 font-bold uppercase">
-                    Famílias Unidas
-                  </p>
-                </div>
+                <span class="text-sm font-black text-slate-700"
+                  >150+ Pessoas Unidas</span
+                >
               </div>
             </div>
           </div>
@@ -187,6 +195,56 @@
             >
               Cronograma de ações. Arraste para o lado para explorar.
             </p>
+          </div>
+        </div>
+
+        <div
+          id="countdown-container"
+          class="mb-12 bg-blue-600/10 border border-blue-500/20 p-6 rounded-[2rem] hidden"
+        >
+          <div
+            class="flex flex-col md:flex-row items-center justify-between gap-6"
+          >
+            <div>
+              <span
+                class="text-blue-500 font-black uppercase text-[10px] tracking-widest block mb-1"
+                >Próxima Ação em:</span
+              >
+              <h4
+                id="next-event-title"
+                class="text-xl font-bold text-white uppercase italic"
+              >
+                Carregando...
+              </h4>
+            </div>
+            <div class="flex gap-4">
+              <div class="text-center">
+                <span id="days" class="text-3xl font-black block text-white"
+                  >00</span
+                >
+                <span class="text-[8px] uppercase font-bold text-slate-500"
+                  >Dias</span
+                >
+              </div>
+              <div class="text-3xl font-black text-blue-500">:</div>
+              <div class="text-center">
+                <span id="hours" class="text-3xl font-black block text-white"
+                  >00</span
+                >
+                <span class="text-[8px] uppercase font-bold text-slate-500"
+                  >Horas</span
+                >
+              </div>
+              <div class="text-3xl font-black text-blue-500">:</div>
+              <div class="text-center">
+                <span id="minutes" class="text-3xl font-black block text-white"
+                  >00</span
+                >
+                <span class="text-[8px] uppercase font-bold text-slate-500"
+                  >Min</span
+                >
+              </div>
+            </div>
           </div>
         </div>
 

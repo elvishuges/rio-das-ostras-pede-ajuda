@@ -94,6 +94,47 @@ function renderizarAgenda() {
     }).join('');
 }
 
+function iniciarContagemRegressiva() {
+    // 1. Encontrar o evento futuro mais próximo
+    const agora = new Date().getTime();
+    
+    // Mapeia as datas para objetos Date reais (considerando o ano atual 2026)
+    const proximos = mobilizacoes.map(m => {
+        const [dia, mesNome] = m.data.split(' ');
+        const meses = { "JAN": 0, "FEV": 1, "MAR": 2, "ABR": 3, "MAI": 4, "JUN": 5 };
+        const dataEvento = new Date(2026, meses[mesNome], parseInt(dia));
+        return { ...m, dataObjeto: dataEvento.getTime() };
+    }).filter(m => m.dataObjeto > agora);
+
+    if (proximos.length > 0) {
+        const proximoEvento = proximos[0];
+        document.getElementById('countdown-container').classList.remove('hidden');
+        document.getElementById('next-event-title').innerText = proximoEvento.titulo;
+
+        const interval = setInterval(() => {
+            const agoraInterno = new Date().getTime();
+            const distancia = proximoEvento.dataObjeto - agoraInterno;
+
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').innerText = dias.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = horas.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutos.toString().padStart(2, '0');
+
+            if (distancia < 0) {
+                clearInterval(interval);
+                document.getElementById('countdown-container').classList.add('hidden');
+            }
+        }, 1000);
+    }
+}
+
+// Chame a função após renderizar a agenda
+renderizarAgenda();
+iniciarContagemRegressiva();
+
 document.addEventListener('DOMContentLoaded', renderizarAgenda);
 
 
