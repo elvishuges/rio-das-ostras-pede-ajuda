@@ -28,7 +28,7 @@
         -webkit-text-fill-color: transparent;
       }
 
-      /* Nova animação de atenção para o card de evento */
+      /* Animação de atenção para o card de evento (Versão Clara) */
       @keyframes pulse-border {
         0% {
           box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
@@ -185,7 +185,7 @@
 
     <section
       id="agenda"
-      class="py-24 bg-slate-950 text-white overflow-hidden relative"
+      class="py-24 bg-white text-slate-900 overflow-hidden relative"
     >
       <div class="max-w-7xl mx-auto px-6 relative">
         <div
@@ -195,93 +195,121 @@
             <h2
               class="text-5xl font-black mb-4 uppercase tracking-tighter italic"
             >
-              Próximos <span class="text-blue-500 text-gradient">Passos</span>
+              Próximos
+              <span class="text-blue-600 border-b-4 border-blue-600"
+                >Passos</span
+              >
             </h2>
             <p
-              class="text-slate-400 max-w-md font-medium italic border-l-2 border-blue-600 pl-4"
+              class="text-slate-500 max-w-md font-medium italic border-l-2 border-blue-600 pl-4"
             >
-              Cronograma de ações. Arraste para o lado para explorar.
+              Cronograma de ações. Fique atento às datas importantes.
             </p>
           </div>
         </div>
 
-        <!-- Card de Próxima Ação com destaque visual (attention-card) -->
+        <!-- Card de Próxima Ação (Versão Clara) -->
         <div
           id="countdown-container"
-          class="mb-12 bg-blue-900/40 p-8 rounded-[2.5rem] card-urgente hidden"
+          class="mb-12 bg-blue-50 p-8 rounded-[2.5rem] attention-card border border-blue-100"
         >
           <div
-            class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10"
+            class="flex flex-col md:flex-row items-center justify-between gap-6"
           >
-            <div
-              class="flex flex-col items-center md:items-start text-center md:text-left"
-            >
+            <div>
               <span
-                class="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-1 rounded-full text-[10px] font-black tracking-widest uppercase mb-4 badge-vivo"
+                class="text-blue-600 font-black uppercase text-[10px] tracking-widest block mb-1"
               >
-                <span class="w-2 h-2 bg-white rounded-full animate-ping"></span>
-                Ação Urgente
+                <i class="fas fa-exclamation-circle mr-1"></i> PRÓXIMA AÇÃO:
               </span>
               <h4
                 id="next-event-title"
-                class="text-3xl font-black text-white uppercase italic leading-tight"
+                class="text-2xl font-bold text-slate-900 uppercase italic leading-tight"
               >
                 Carregando...
               </h4>
-              <p class="text-blue-300 font-medium mt-2">
-                Mobilização dos moradores da Enseada das Gaivotas
-              </p>
             </div>
 
-            <div
-              class="bg-black/40 backdrop-blur-md p-6 rounded-3xl border border-white/10 flex gap-6 shadow-2xl"
-            >
-              <div class="text-center">
-                <span id="days" class="text-4xl font-black block text-white"
-                  >00</span
-                >
-                <span
-                  class="text-[9px] uppercase font-bold text-blue-400 tracking-tighter"
-                  >Dias</span
-                >
-              </div>
-              <div class="text-4xl font-black text-blue-500 animate-pulse">
-                :
-              </div>
-              <div class="text-center">
-                <span id="hours" class="text-4xl font-black block text-white"
-                  >00</span
-                >
-                <span
-                  class="text-[9px] uppercase font-bold text-blue-400 tracking-tighter"
-                  >Horas</span
-                >
-              </div>
-              <div class="text-4xl font-black text-blue-500 animate-pulse">
-                :
-              </div>
-              <div class="text-center">
-                <span id="minutes" class="text-4xl font-black block text-white"
-                  >00</span
-                >
-                <span
-                  class="text-[9px] uppercase font-bold text-blue-400 tracking-tighter"
-                  >Minutos</span
-                >
+            <!-- Adicionei uma label "Faltam" aqui para clareza -->
+            <div class="flex flex-col items-center gap-2">
+              <span
+                class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter"
+                >Faltam apenas:</span
+              >
+              <div
+                class="flex gap-4 bg-white p-4 rounded-2xl shadow-sm border border-blue-50"
+              >
+                <div class="text-center">
+                  <span
+                    id="days"
+                    class="text-3xl font-black block text-blue-600"
+                    >00</span
+                  >
+                  <span class="text-[8px] uppercase font-bold text-slate-400"
+                    >Dias</span
+                  >
+                </div>
+                <div class="text-3xl font-black text-slate-200">:</div>
+                <div class="text-center">
+                  <span
+                    id="hours"
+                    class="text-3xl font-black block text-blue-600"
+                    >00</span
+                  >
+                  <span class="text-[8px] uppercase font-bold text-slate-400"
+                    >Horas</span
+                  >
+                </div>
+                <div class="text-3xl font-black text-slate-200">:</div>
+                <div class="text-center">
+                  <span
+                    id="minutes"
+                    class="text-3xl font-black block text-blue-600"
+                    >00</span
+                  >
+                  <span class="text-[8px] uppercase font-bold text-slate-400"
+                    >Min</span
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="event-grid-container relative">
+        <div
+          class="event-grid-container relative bg-slate-900 p-8 rounded-[2.5rem] overflow-hidden"
+        >
           <div
-            class="event-grid flex items-stretch overflow-x-auto gap-6 pb-12 snap-x snap-mandatory no-scrollbar animate-reveal"
+            class="event-grid flex flex-nowrap items-stretch gap-6 pb-4 overflow-x-auto no-scrollbar snap-x snap-mandatory animate-slide-in"
+            style="scrollbar-width: none; -ms-overflow-style: none"
           ></div>
         </div>
+
+        <style>
+          /* Adicione esta regra de animação no seu bloco <style> no head */
+          @keyframes slide-in {
+            0% {
+              transform: translateX(50px);
+              opacity: 0;
+            }
+            100% {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+          .animate-slide-in {
+            animation: slide-in 1.2s ease-out forwards;
+          }
+
+          /* Garante que a barra de rolagem suma em todos os navegadores */
+          .no-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+        </style>
       </div>
     </section>
 
-    <!-- Seção Transparência mantida e corrigida -->
+    <!-- Seção Transparência -->
     <section id="transparencia" class="py-24 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <div class="mb-16 text-center md:text-left">
@@ -298,53 +326,123 @@
             >
           </h2>
         </div>
-        <!-- Cards de termos... (mantidos conforme original) -->
+
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Ofício -->
-          <div
-            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group"
+          <a
+            href="#detalhes-oficio"
+            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group block cursor-pointer text-slate-900 hover:text-blue-600"
           >
             <div
-              class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-lg shadow-blue-200"
+              class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-lg shadow-blue-200 group-hover:scale-110 transition-transform"
             >
               <i class="fas fa-file-signature"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">Fazer Ofício</h3>
+
+            <h3 class="text-xl font-bold mb-3 transition-colors">
+              Fazer Ofício
+            </h3>
+
             <p class="text-slate-600 text-sm leading-relaxed mb-6">
               É um documento formal escrito pelo movimento para a autoridade. É
               a prova legal de que o pedido foi feito.
             </p>
-          </div>
+          </a>
+
           <!-- Comissão -->
-          <div
-            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group"
+          <a
+            href="https://sapl.riodasostras.rj.leg.br/comissao/15/composicao"
+            target="_blank"
+            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group block"
           >
             <div
               class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-lg"
             >
               <i class="fas fa-hard-hat"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">Comissão de Obras</h3>
+            <h3
+              class="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors"
+            >
+              Comissão de Obras
+              <i class="fas fa-external-link-alt text-xs ml-1"></i>
+            </h3>
             <p class="text-slate-600 text-sm leading-relaxed mb-6">
-              Grupo de vereadores responsáveis por fiscalizar obras públicas. É
-              com eles que cobramos o andamento do asfalto.
+              Grupo de vereadores responsáveis por fiscalizar obras públicas.
+              Clique aqui para ver quem são os atuais membros na Câmara.
             </p>
-          </div>
+            <div
+              class="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest opacity-1 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 italic"
+            >
+              Ver detalhes
+              <i
+                class="fas fa-arrow-right transition-transform group-hover:translate-x-1"
+              ></i>
+            </div>
+          </a>
+
           <!-- PPA -->
-          <div
-            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group"
+          <a
+            href="https://sapl.riodasostras.rj.leg.br/media/sapl/public/normajuridica/2025/3466/jornal_1904_plano_plurianual.pdf"
+            target="_blank"
+            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group block"
           >
             <div
               class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-lg shadow-emerald-200"
             >
               <i class="fas fa-calendar-alt"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">PPA (Plano Plurianual)</h3>
+            <h3
+              class="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors"
+            >
+              PPA (Plano Plurianual)
+              <i class="fas fa-external-link-alt text-xs ml-1"></i>
+            </h3>
             <p class="text-slate-600 text-sm leading-relaxed mb-6">
               O plano de 4 anos da prefeitura. Se a nossa rua está aqui, existe
-              um compromisso oficial de pavimentação.
+              um compromisso oficial. Clique para consultar as leis vigentes.
             </p>
-          </div>
+            <div
+              class="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest opacity-1 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 italic"
+            >
+              Ver detalhes
+              <i
+                class="fas fa-arrow-right transition-transform group-hover:translate-x-1"
+              ></i>
+            </div>
+          </a>
+
+          <a
+            href="https://sapl.riodasostras.rj.leg.br/media/sapl/public/materialegislativa/2025/20140/emenda_impositiva_06.pdf"
+            target="_blank"
+            class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 hover:shadow-xl transition-all group block"
+          >
+            <div
+              class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mb-6 text-2xl shadow-lg shadow-emerald-200"
+            >
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3
+              class="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors"
+            >
+              LEI ORÇAMENTÁRIA ANUAL
+              <i class="fas fa-external-link-alt text-xs ml-1"></i>
+            </h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+              A Lei Orçamentária Anual (LOA) é o instrumento legal que estima as
+              receitas e fixa as despesas públicas para o período de um
+              exercício financeiro (um ano), garantindo que os gastos do governo
+              estejam em conformidade com o Plano Plurianual (PPA) e a Lei de
+              Diretrizes Orçamentárias (LDO)
+            </p>
+            <div
+              class="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest opacity-1 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 italic"
+            >
+              Ver detalhes
+              <i
+                class="fas fa-arrow-right transition-transform group-hover:translate-x-1"
+              ></i>
+            </div>
+          </a>
         </div>
       </div>
     </section>

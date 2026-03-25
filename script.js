@@ -51,65 +51,90 @@ function renderizarAgenda() {
     if (!grid) return;
 
     grid.innerHTML = mobilizacoes.map(item => {
-        const [dia, mes] = item.data.split(' ');
-        
-        // Verifica se é online ou presencial para mudar o ícone do botão
-        const isOnline = item.local.toLowerCase().includes('online');
-        const btnIcon = isOnline ? 'fa-external-link-alt' : 'fa-location-arrow';
-        const btnLabel = isOnline ? 'Acessar Link' : 'Como Chegar';
+    const [dia, mes] = item.data.split(' ');
+    
+    // Verifica se é online ou presencial para mudar o ícone do botão
+    const isOnline = item.local.toLowerCase().includes('online');
+    const btnIcon = isOnline ? 'fa-external-link-alt' : 'fa-location-arrow';
+    const btnLabel = isOnline ? 'Acessar Link' : 'Como Chegar';
 
-        return `
-            <div class="flex snap-center min-w-[300px] md:min-w-[380px]">
-                <div class="flex flex-col w-full bg-slate-900/40 p-8 rounded-[3rem] border border-slate-800 hover:border-blue-500/40 transition-all duration-500 group shadow-2xl relative overflow-hidden">
-                    
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="flex flex-col">
-                            <span class="text-4xl font-black text-blue-500 leading-none">${dia}</span>
-                            <span class="text-xs font-bold uppercase tracking-widest text-slate-500">${mes}</span>
-                        </div>
-                        <span class="text-[10px] font-black bg-blue-600/10 text-blue-400 border border-blue-400/20 px-3 py-1.5 rounded-full uppercase tracking-widest">
+    return `
+        <div class="flex snap-center min-w-[300px] md:min-w-[380px]">
+            <div class="flex flex-col w-full bg-slate-900/40 p-8 rounded-[3rem] border border-slate-800 hover:border-blue-500/40 transition-all duration-500 group shadow-2xl relative overflow-hidden">
+                
+                <div class="flex justify-between items-start mb-8">
+                    <div class="flex flex-col">
+                        <span class="text-4xl font-black text-blue-500 leading-none">${dia}</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">${mes}</span>
+                    </div>
+                    <!-- Horário em destaque -->
+                    <div class="flex flex-col items-end">
+                        <span class="text-[10px] font-black bg-blue-600/10 text-blue-400 border border-blue-400/20 px-3 py-1.5 rounded-full uppercase tracking-widest mb-2">
                             ${item.status}
                         </span>
+                        <div class="flex items-center gap-1 text-blue-400 font-bold text-sm mr-1">
+                            <i class="far fa-clock"></i> ${item.diaSemana || '00:00'}
+                        </div>
                     </div>
-                    
-                    <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors leading-tight">
-                        ${item.titulo}
-                    </h3>
+                </div>
+                
+                <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors leading-tight">
+                    ${item.titulo}
+                </h3>
 
-                    <a href="${item.mapa}" target="_blank" class="text-slate-500 hover:text-blue-400 mb-6 italic text-sm flex items-center gap-2 transition-colors">
-                        <i class="${item.icon || 'fas fa-map-marker-alt'} text-blue-600/50"></i> 
+                <div class="space-y-2 mb-6">
+                    <a href="${item.mapa}" target="_blank" class="text-slate-500 hover:text-blue-400 italic text-sm flex items-center gap-2 transition-colors">
+                        <i class="${item.icon || 'fas fa-map-marker-alt'} text-blue-600/50 w-4"></i> 
                         <span class="underline decoration-dotted underline-offset-4">${item.local}</span>
                     </a>
-
-                    <p class="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
-                        ${item.descricao}
-                    </p>
-
-                    <a href="${item.mapa}" target="_blank" class="w-full py-4 bg-slate-800 group-hover:bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg active:scale-95 text-center flex items-center justify-center gap-2">
-                        <i class="fas ${btnIcon}"></i> ${btnLabel}
-                    </a>
                 </div>
+
+                <p class="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+                    ${item.descricao}
+                </p>
+
+                <a href="${item.mapa}" target="_blank" class="w-full py-4 bg-slate-800 group-hover:bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg active:scale-95 text-center flex items-center justify-center gap-2">
+                    <i class="fas ${btnIcon}"></i> ${btnLabel}
+                </a>
             </div>
-        `;
-    }).join('');
+        </div>
+    `;
+}).join('');
 }
 
 function iniciarContagemRegressiva() {
-    // 1. Encontrar o evento futuro mais próximo
     const agora = new Date().getTime();
     
-    // Mapeia as datas para objetos Date reais (considerando o ano atual 2026)
     const proximos = mobilizacoes.map(m => {
-        const [dia, mesNome] = m.data.split(' ');
+        const partesData = m.data.split(' ');
+        const dia = parseInt(partesData[0]);
+        const mesNome = partesData[1];
         const meses = { "JAN": 0, "FEV": 1, "MAR": 2, "ABR": 3, "MAI": 4, "JUN": 5 };
-        const dataEvento = new Date(2026, meses[mesNome], parseInt(dia));
-        return { ...m, dataObjeto: dataEvento.getTime() };
+
+        // Extrai apenas os números do campo diaSemana (ex: "Sexta - 17h" vira 17)
+        // Se não houver número, assume 00:00
+        const horaMatch = m.diaSemana ? m.diaSemana.match(/\d+/) : null;
+        const horaEvento = horaMatch ? parseInt(horaMatch[0]) : 0;
+
+        // Cria o objeto de data incluindo a hora extraída
+        const dataEvento = new Date(2026, meses[mesNome], dia, horaEvento, 0, 0);
+        
+        return { 
+            ...m, 
+            dataObjeto: dataEvento.getTime(), 
+            dataFormatada: `${dia} de ${mesNome} às ${horaEvento}h` 
+        };
     }).filter(m => m.dataObjeto > agora);
+
+    // Ordena para garantir que pegamos o mais próximo primeiro
+    proximos.sort((a, b) => a.dataObjeto - b.dataObjeto);
 
     if (proximos.length > 0) {
         const proximoEvento = proximos[0];
         document.getElementById('countdown-container').classList.remove('hidden');
-        document.getElementById('next-event-title').innerText = proximoEvento.titulo;
+        
+        document.getElementById('next-event-title').innerHTML = 
+            `${proximoEvento.titulo} <span class="text-blue-600 block text-sm not-italic font-medium mt-1">Agendado para: ${proximoEvento.dataFormatada}</span>`;
 
         const interval = setInterval(() => {
             const agoraInterno = new Date().getTime();
@@ -125,7 +150,11 @@ function iniciarContagemRegressiva() {
 
             if (distancia < 0) {
                 clearInterval(interval);
-                document.getElementById('countdown-container').classList.add('hidden');
+                document.getElementById('countdown-container').innerHTML = `
+                    <div class="text-center py-4 w-full">
+                        <span class="text-blue-600 font-bold animate-bounce">O EVENTO ESTÁ ACONTECENDO! 🚀</span>
+                    </div>
+                `;
             }
         }, 1000);
     }
