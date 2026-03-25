@@ -18,3 +18,44 @@ body {
 /* Esconde a scrollbar padrão mas mantém a funcionalidade */
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Animação de pulso suave na borda */
+@keyframes pulse-blue {
+  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+/* Animação de brilho que passa pelo card */
+@keyframes shine {
+  from { left: -100%; }
+  to { left: 100%; }
+}
+
+.card-urgente {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #3b82f6;
+  animation: pulse-blue 2s infinite;
+}
+
+.card-urgente::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  transform: skewX(-25deg);
+  animation: shine 3s infinite;
+}
+
+.badge-vivo {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.1); opacity: 0.8; }
+}
