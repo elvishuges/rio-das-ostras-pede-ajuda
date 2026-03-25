@@ -53,32 +53,45 @@ function renderizarAgenda() {
     grid.innerHTML = mobilizacoes.map(item => {
     const [dia, mes] = item.data.split(' ');
     
-    // Verifica se é online ou presencial para mudar o ícone do botão
+    // Lógica de cores para o Status
+    const statusLower = item.status.toLowerCase();
+    let statusClasses = "";
+    
+    if (statusLower.includes('pendente')) {
+        statusClasses = "bg-red-600/10 text-red-400 border-red-400/20";
+    } else if (statusLower.includes('confirmado')) {
+        statusClasses = "bg-emerald-600/10 text-emerald-400 border-emerald-400/20";
+    } else {
+        // Cor padrão (Azul) caso seja outro status
+        statusClasses = "bg-blue-600/10 text-blue-400 border-blue-400/20";
+    }
+
     const isOnline = item.local.toLowerCase().includes('online');
     const btnIcon = isOnline ? 'fa-external-link-alt' : 'fa-location-arrow';
     const btnLabel = isOnline ? 'Acessar Link' : 'Como Chegar';
 
     return `
         <div class="flex snap-center min-w-[300px] md:min-w-[380px]">
-            <div class="flex flex-col w-full bg-slate-900/40 p-8 rounded-[3rem] border border-slate-800 hover:border-blue-500/40 transition-all duration-500 group shadow-2xl relative overflow-hidden">
+            <div class="flex flex-col w-full bg-slate-900 p-8 rounded-[3rem] border border-slate-800 hover:border-blue-500/40 transition-all duration-500 group shadow-2xl relative overflow-hidden">
                 
                 <div class="flex justify-between items-start mb-8">
                     <div class="flex flex-col">
                         <span class="text-4xl font-black text-blue-500 leading-none">${dia}</span>
                         <span class="text-xs font-bold uppercase tracking-widest text-slate-500">${mes}</span>
                     </div>
-                    <!-- Horário em destaque -->
+                    
                     <div class="flex flex-col items-end">
-                        <span class="text-[10px] font-black bg-blue-600/10 text-blue-400 border border-blue-400/20 px-3 py-1.5 rounded-full uppercase tracking-widest mb-2">
+                        <!-- Badge com cor dinâmica -->
+                        <span class="text-[10px] font-black border px-3 py-1.5 rounded-full uppercase tracking-widest mb-2 ${statusClasses}">
                             ${item.status}
                         </span>
-                        <div class="flex items-center gap-1 text-blue-400 font-bold text-sm mr-1">
-                            <i class="far fa-clock"></i> ${item.diaSemana || '00:00'}
+                        <div class="flex items-center gap-1 text-slate-400 font-bold text-sm mr-1">
+                            <i class="far fa-clock text-blue-500"></i> ${item.diaSemana || '00:00'}
                         </div>
                     </div>
                 </div>
                 
-                <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors leading-tight">
+                <h3 class="text-2xl font-bold mb-3 text-blue-400 transition-colors leading-tight">
                     ${item.titulo}
                 </h3>
 

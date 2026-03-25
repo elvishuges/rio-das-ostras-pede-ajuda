@@ -48,7 +48,7 @@ const mobilizacoes = [
         diaSemana: "Segunda - 12h",
         status: "CONFIRMADO",
         statusColor: "emerald",
-        titulo: "Protesto Enseada das Gaivotas",
+        titulo: "Manifestação Enseada das Gaivotas",
         local: "Câmara Municipal de Rio das Ostras",
         mapa: "https://www.google.com/maps/search/?api=1&query=Câmara+Municipal+Rio+das+Ostras",
         descricao: "Manifestação para chamar a atenção dos vereadores.",
