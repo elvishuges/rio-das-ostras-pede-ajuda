@@ -51,8 +51,12 @@ function renderizarAgenda() {
     if (!grid) return;
 
     grid.innerHTML = mobilizacoes.map(item => {
-        // Separa data e mês para o visual de calendário
         const [dia, mes] = item.data.split(' ');
+        
+        // Verifica se é online ou presencial para mudar o ícone do botão
+        const isOnline = item.local.toLowerCase().includes('online');
+        const btnIcon = isOnline ? 'fa-external-link-alt' : 'fa-location-arrow';
+        const btnLabel = isOnline ? 'Acessar Link' : 'Como Chegar';
 
         return `
             <div class="flex snap-center min-w-[300px] md:min-w-[380px]">
@@ -71,17 +75,19 @@ function renderizarAgenda() {
                     <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-400 transition-colors leading-tight">
                         ${item.titulo}
                     </h3>
-                    <p class="text-slate-500 mb-6 italic text-sm flex items-center gap-2">
-                        <i class="fas fa-location-dot text-blue-600/50"></i> ${item.local}
-                    </p>
+
+                    <a href="${item.mapa}" target="_blank" class="text-slate-500 hover:text-blue-400 mb-6 italic text-sm flex items-center gap-2 transition-colors">
+                        <i class="${item.icon || 'fas fa-map-marker-alt'} text-blue-600/50"></i> 
+                        <span class="underline decoration-dotted underline-offset-4">${item.local}</span>
+                    </a>
 
                     <p class="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
                         ${item.descricao}
                     </p>
 
-                    <button class="w-full py-4 bg-slate-800 group-hover:bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg active:scale-95">
-                        ${item.cta || 'Saber mais'}
-                    </button>
+                    <a href="${item.mapa}" target="_blank" class="w-full py-4 bg-slate-800 group-hover:bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg active:scale-95 text-center flex items-center justify-center gap-2">
+                        <i class="fas ${btnIcon}"></i> ${btnLabel}
+                    </a>
                 </div>
             </div>
         `;
@@ -90,6 +96,5 @@ function renderizarAgenda() {
 
 document.addEventListener('DOMContentLoaded', renderizarAgenda);
 
-document.addEventListener('DOMContentLoaded', renderizarAgenda);
 
 document.addEventListener('DOMContentLoaded', renderizarAssembleias);

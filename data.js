@@ -35,9 +35,10 @@ const mobilizacoes = [
         data: "27 MAR",
         diaSemana: "Sexta - 17h",
         status: "CONFIRMADO",
-        statusColor: "emerald", // emerald, amber, blue, red
+        statusColor: "emerald",
         titulo: "Reunião dos moradores",
         local: "Salão de Festas Hotspot",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Salão+de+Festas+Hotspot+Rio+das+Ostras", // Link do Maps
         descricao: "Final da rua Aurélio Buarque de Holanda, Q1, Lote 09.",
         icon: "fas fa-map-marker-alt",
         tipo: "PRESENCIAL"
@@ -46,10 +47,11 @@ const mobilizacoes = [
         data: "30 MAR",
         diaSemana: "Segunda - 12h",
         status: "CONFIRMADO",
-        statusColor: "emerald", // emerald, amber, blue, red
+        statusColor: "emerald",
         titulo: "Protesto Enseada das Gaivotas",
-        local: "Porta da Câmara dos Vereadores",
-        descricao: "Manifestação para camar a atenção dos vereadores.",
+        local: "Câmara Municipal de Rio das Ostras",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Câmara+Municipal+Rio+das+Ostras",
+        descricao: "Manifestação para chamar a atenção dos vereadores.",
         icon: "fas fa-map-marker-alt",
         tipo: "PRESENCIAL"
     },
@@ -58,9 +60,10 @@ const mobilizacoes = [
         diaSemana: "Segunda - 10h",
         status: "PENDENTE",
         statusColor: "amber",
-        titulo: "Blitz Digital: Invasão às Redes",
-        local: "Online (Instagram Oficial)",
-        descricao: "Comentários simultâneos no perfil do Prefeito exigindo respostas.",
+        titulo: "Blitz Digital",
+        local: "Online (Instagram)",
+        mapa: "https://www.instagram.com/prefeituraderiodasostrasoficial/", // Link da rede social
+        descricao: "Comentários simultâneos exigindo respostas.",
         icon: "fas fa-laptop",
     },
     {
@@ -68,9 +71,10 @@ const mobilizacoes = [
         diaSemana: "Quarta - 09h",
         status: "ESTRATÉGICO",
         statusColor: "blue",
-        titulo: "Entrega de Ofício na Câmara",
+        titulo: "Entrega de Ofício",
         local: "Sede da Câmara Municipal",
-        descricao: "Protocolo coletivo do dossiê de fotos e reclamações.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Câmara+Municipal+Rio+das+Ostras",
+        descricao: "Protocolo coletivo do dossiê de fotos.",
         icon: "fas fa-building",
     }
 ];
