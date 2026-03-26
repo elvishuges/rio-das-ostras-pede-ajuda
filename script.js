@@ -117,19 +117,17 @@ function renderizarAgenda() {
 
 function iniciarContagemRegressiva() {
     const agora = new Date().getTime();
-    
+    const DURACAO_EVENTO_MS = 2 * 60 * 60 * 1000; // Define que o evento dura 2 horas
+
     const proximos = mobilizacoes.map(m => {
         const partesData = m.data.split(' ');
         const dia = parseInt(partesData[0]);
         const mesNome = partesData[1];
         const meses = { "JAN": 0, "FEV": 1, "MAR": 2, "ABR": 3, "MAI": 4, "JUN": 5 };
 
-        // Extrai apenas os números do campo diaSemana (ex: "Sexta - 17h" vira 17)
-        // Se não houver número, assume 00:00
         const horaMatch = m.diaSemana ? m.diaSemana.match(/\d+/) : null;
         const horaEvento = horaMatch ? parseInt(horaMatch[0]) : 0;
 
-        // Cria o objeto de data incluindo a hora extraída
         const dataEvento = new Date(2026, meses[mesNome], dia, horaEvento, 0, 0);
         
         return { 
@@ -137,37 +135,60 @@ function iniciarContagemRegressiva() {
             dataObjeto: dataEvento.getTime(), 
             dataFormatada: `${dia} de ${mesNome} às ${horaEvento}h` 
         };
-    }).filter(m => m.dataObjeto > agora);
+    }).filter(m => {
+        // Deixa passar se o evento ainda vai acontecer 
+        // OU se ele começou há menos de 2 horas (está acontecendo agora)
+        return m.dataObjeto + DURACAO_EVENTO_MS > agora;
+    });
 
-    // Ordena para garantir que pegamos o mais próximo primeiro
     proximos.sort((a, b) => a.dataObjeto - b.dataObjeto);
 
     if (proximos.length > 0) {
         const proximoEvento = proximos[0];
-        document.getElementById('countdown-container').classList.remove('hidden');
-        
-        document.getElementById('next-event-title').innerHTML = 
-            `${proximoEvento.titulo} <span class="text-blue-600 block text-sm not-italic font-medium mt-1">Agendado para: ${proximoEvento.dataFormatada}</span>`;
+        const container = document.getElementById('countdown-container');
+        container.classList.remove('hidden');
 
         const interval = setInterval(() => {
             const agoraInterno = new Date().getTime();
             const distancia = proximoEvento.dataObjeto - agoraInterno;
 
-            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-
-            document.getElementById('days').innerText = dias.toString().padStart(2, '0');
-            document.getElementById('hours').innerText = horas.toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = minutos.toString().padStart(2, '0');
-
             if (distancia < 0) {
-                clearInterval(interval);
-                document.getElementById('countdown-container').innerHTML = `
-                    <div class="text-center py-4 w-full">
-                        <span class="text-blue-600 font-bold animate-bounce">O EVENTO ESTÁ ACONTECENDO! 🚀</span>
-                    </div>
-                `;
+    // Se a distância é negativa, mas o evento passou pelo filtro, ele está ocorrendo
+    clearInterval(interval);
+    container.innerHTML = `
+        <div class="text-center py-4 w-full">
+            <div class="mb-3">
+                <span class="text-blue-600 font-bold animate-bounce text-lg block">
+                   🚀 ${proximoEvento.titulo.toUpperCase()} ESTÁ ACONTECENDO!
+                </span>
+            </div>
+            
+            <div class="bg-blue-50 p-3 rounded-lg inline-block text-left w-full max-w-md border border-blue-100">
+                <p class="text-sm text-gray-700 mb-2">
+                    <strong>📍 Local:</strong> ${proximoEvento.local}
+                </p>
+                <p class="text-sm text-gray-600 mb-3 italic">
+                    ${proximoEvento.descricao}
+                </p>
+                <a href="${proximoEvento.mapa}" target="_blank" 
+                   class="inline-flex items-center justify-center w-full bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-directions mr-2"></i> Ver no Google Maps
+                </a>
+            </div>
+        </div>
+    `;
+} else {
+                // Lógica normal do cronômetro
+                const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById('next-event-title').innerHTML = 
+                    `${proximoEvento.titulo} <span class="text-blue-600 block text-sm not-italic font-medium mt-1">Agendado para: ${proximoEvento.dataFormatada}</span>`;
+                
+                document.getElementById('days').innerText = dias.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = horas.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutos.toString().padStart(2, '0');
             }
         }, 1000);
     }
