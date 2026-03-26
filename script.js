@@ -194,6 +194,46 @@ function iniciarContagemRegressiva() {
     }
 }
 
+function renderizarTimeline() {
+    const timelineContainer = document.getElementById('timeline-content');
+    
+    // Inverte a ordem se quiser mostrar o mais próximo primeiro, 
+    // ou mantém assim para ordem cronológica de progresso
+    const html = mobilizacoes.map((m, index) => {
+        const isEven = index % 2 === 0;
+        const colorClass = m.statusColor === 'emerald' ? 'bg-emerald-500' : 
+                          m.statusColor === 'amber' ? 'bg-amber-500' : 'bg-blue-600';
+
+        return `
+            <div class="relative flex flex-col lg:flex-row items-center justify-between group">
+                <!-- Data e Ícone (Centro) -->
+                <div class="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 w-12 h-12 ${colorClass} rounded-2xl items-center justify-center text-white z-20 shadow-lg border-4 border-white transition-transform group-hover:scale-110">
+                    <i class="${m.icon || 'fas fa-check'}"></i>
+                </div>
+
+                <!-- Conteúdo -->
+                <div class="w-full lg:w-[45%] ${isEven ? 'lg:text-right' : 'lg:ml-auto lg:text-left'}">
+                    <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-md transition-all">
+                        <span class="inline-block px-3 py-1 rounded-full text-[10px] font-black text-white ${colorClass} mb-3 uppercase tracking-widest">
+                            ${m.data} - ${m.status}
+                        </span>
+                        <h3 class="text-xl font-extrabold text-slate-900 mb-2 uppercase">${m.titulo}</h3>
+                        <p class="text-slate-500 text-sm italic leading-relaxed">${m.descricao}</p>
+                        <div class="mt-4 flex items-center gap-2 ${isEven ? 'lg:justify-end' : 'justify-start'} text-slate-400 text-xs font-bold">
+                            <i class="fas fa-map-marker-alt"></i> ${m.local}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    timelineContainer.innerHTML = html;
+}
+
+// Chame a função no final do seu script.js
+renderizarTimeline();
+
 // Chame a função após renderizar a agenda
 renderizarAgenda();
 iniciarContagemRegressiva();
