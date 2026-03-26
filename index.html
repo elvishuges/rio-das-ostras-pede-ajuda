@@ -187,7 +187,7 @@
       id="agenda"
       class="py-24 bg-white text-slate-900 overflow-hidden relative"
     >
-      <div class="max-w-7xl mx-auto px-6 relative">
+      <div class="max-w-7xl mx-auto px-1 relative">
         <div
           class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
@@ -283,6 +283,36 @@
             class="event-grid flex flex-nowrap items-stretch gap-6 pb-4 overflow-x-auto no-scrollbar snap-x snap-mandatory animate-slide-in"
             style="scrollbar-width: none; -ms-overflow-style: none"
           ></div>
+          <!-- Setas de Navegação -->
+          <div class="hidden md:flex justify-center gap-3 mt-6">
+            <!-- Botão Voltar -->
+            <button
+              onclick="scrollGrid(-1)"
+              class="w-9 h-9 rounded-full border border-slate-700 text-blue-500/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all active:scale-90 flex items-center justify-center"
+            >
+              <i class="fas fa-chevron-left text-xs"></i>
+            </button>
+
+            <!-- Botão Avançar -->
+            <button
+              onclick="scrollGrid(1)"
+              class="w-9 h-9 rounded-full border border-slate-700 text-blue-500/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/5 transition-all active:scale-90 flex items-center justify-center"
+            >
+              <i class="fas fa-chevron-right text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Indicador Visual para Mobile (Mãozinha deslizando) -->
+          <div
+            class="flex lg:hidden items-center justify-center gap-2 text-slate-500 animate-pulse"
+          >
+            <i class="fas fa-hand-pointer text-xs"></i>
+            <i class="fas fa-arrow-left text-xs"></i>
+            <span class="text-[10px] font-bold uppercase tracking-widest"
+              >Deslize para os lado</span
+            >
+            <i class="fas fa-arrow-right text-xs"></i>
+          </div>
         </div>
 
         <style>
@@ -310,7 +340,7 @@
     </section>
 
     <!-- Seção Transparência -->
-    <section id="transparencia" class="py-24 bg-white">
+    <section id="transparencia" class="py-12 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <div class="mb-16 text-center md:text-left">
           <span

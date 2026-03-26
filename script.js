@@ -46,6 +46,15 @@ function renderizarAssembleias() {
     });
 }
 
+function scrollGrid(direcao) {
+    const grid = document.querySelector('.event-grid');
+    const scrollAmount = 340; // Largura aproximada de um card + gap
+    grid.scrollBy({
+        left: direcao * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+
 function renderizarAgenda() {
     const grid = document.querySelector('.event-grid');
     if (!grid) return;
@@ -71,47 +80,49 @@ function renderizarAgenda() {
     const btnLabel = isOnline ? 'Acessar Link' : 'Como Chegar';
 
     return `
-        <div class="flex snap-center min-w-[300px] md:min-w-[380px]">
-            <div class="flex flex-col w-full bg-slate-900 p-8 rounded-[3rem] border border-slate-800 hover:border-blue-500/40 transition-all duration-500 group shadow-2xl relative overflow-hidden">
-                
-                <div class="flex justify-between items-start mb-8">
-                    <div class="flex flex-col">
-                        <span class="text-4xl font-black text-blue-500 leading-none">${dia}</span>
-                        <span class="text-xs font-bold uppercase tracking-widest text-slate-500">${mes}</span>
-                    </div>
-                    
-                    <div class="flex flex-col items-end">
-                        <!-- Badge com cor dinâmica -->
-                        <span class="text-[10px] font-black border px-3 py-1.5 rounded-full uppercase tracking-widest mb-2 ${statusClasses}">
-                            ${item.status}
-                        </span>
-                        <div class="flex items-center gap-1 text-slate-400 font-bold text-sm mr-1">
-                            <i class="far fa-clock text-blue-500"></i> ${item.diaSemana || '00:00'}
-                        </div>
-                    </div>
+    <div class="flex snap-center min-w-[300px] md:min-w-[380px] p-4"> <!-- Adicionado padding para o card não cortar ao subir -->
+        <div class="flex flex-col w-full bg-slate-900 p-8 rounded-[3rem] border border-slate-800 
+                    hover:border-blue-500/40 transition-all duration-500 group shadow-2xl relative overflow-hidden
+                    hover:-translate-y-4 hover:shadow-[0_20px_50px_rgba(59,130,246,0.2)] transform">
+            
+            <div class="flex justify-between items-start mb-8">
+                <div class="flex flex-col">
+                    <span class="text-4xl font-black text-blue-500 leading-none">${dia}</span>
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-500">${mes}</span>
                 </div>
                 
-                <h3 class="text-2xl font-bold mb-3 text-blue-400 transition-colors leading-tight">
-                    ${item.titulo}
-                </h3>
-
-                <div class="space-y-2 mb-6">
-                    <a href="${item.mapa}" target="_blank" class="text-slate-500 hover:text-blue-400 italic text-sm flex items-center gap-2 transition-colors">
-                        <i class="${item.icon || 'fas fa-map-marker-alt'} text-blue-600/50 w-4"></i> 
-                        <span class="underline decoration-dotted underline-offset-4">${item.local}</span>
-                    </a>
+                <div class="flex flex-col items-end">
+                    <!-- Badge com cor dinâmica -->
+                    <span class="text-[10px] font-black border px-3 py-1.5 rounded-full uppercase tracking-widest mb-2 ${statusClasses}">
+                        ${item.status}
+                    </span>
+                    <div class="flex items-center gap-1 text-slate-400 font-bold text-sm mr-1">
+                        <i class="far fa-clock text-blue-500"></i> ${item.diaSemana || '00:00'}
+                    </div>
                 </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold mb-3 text-blue-400 group-hover:text-blue-300 transition-colors leading-tight">
+                ${item.titulo}
+            </h3>
 
-                <p class="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
-                    ${item.descricao}
-                </p>
-
-                <a href="${item.mapa}" target="_blank" class="w-full py-4 bg-slate-800 group-hover:bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg active:scale-95 text-center flex items-center justify-center gap-2">
-                    <i class="fas ${btnIcon}"></i> ${btnLabel}
+            <div class="space-y-2 mb-6">
+                <a href="${item.mapa}" target="_blank" class="text-slate-500 hover:text-blue-400 italic text-sm flex items-center gap-2 transition-colors">
+                    <i class="${item.icon || 'fas fa-map-marker-alt'} text-blue-600/50 w-4"></i> 
+                    <span class="underline decoration-dotted underline-offset-4">${item.local}</span>
                 </a>
             </div>
+
+            <p class="text-slate-400 text-sm leading-relaxed mb-8 flex-grow">
+                ${item.descricao}
+            </p>
+
+            <a href="${item.mapa}" target="_blank" class="w-full py-4 bg-slate-800 group-hover:bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg active:scale-95 text-center flex items-center justify-center gap-2">
+                <i class="fas ${btnIcon}"></i> ${btnLabel}
+            </a>
         </div>
-    `;
+    </div>
+`;
 }).join('');
 }
 
@@ -194,45 +205,6 @@ function iniciarContagemRegressiva() {
     }
 }
 
-function renderizarTimeline() {
-    const timelineContainer = document.getElementById('timeline-content');
-    
-    // Inverte a ordem se quiser mostrar o mais próximo primeiro, 
-    // ou mantém assim para ordem cronológica de progresso
-    const html = mobilizacoes.map((m, index) => {
-        const isEven = index % 2 === 0;
-        const colorClass = m.statusColor === 'emerald' ? 'bg-emerald-500' : 
-                          m.statusColor === 'amber' ? 'bg-amber-500' : 'bg-blue-600';
-
-        return `
-            <div class="relative flex flex-col lg:flex-row items-center justify-between group">
-                <!-- Data e Ícone (Centro) -->
-                <div class="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 w-12 h-12 ${colorClass} rounded-2xl items-center justify-center text-white z-20 shadow-lg border-4 border-white transition-transform group-hover:scale-110">
-                    <i class="${m.icon || 'fas fa-check'}"></i>
-                </div>
-
-                <!-- Conteúdo -->
-                <div class="w-full lg:w-[45%] ${isEven ? 'lg:text-right' : 'lg:ml-auto lg:text-left'}">
-                    <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 hover:shadow-md transition-all">
-                        <span class="inline-block px-3 py-1 rounded-full text-[10px] font-black text-white ${colorClass} mb-3 uppercase tracking-widest">
-                            ${m.data} - ${m.status}
-                        </span>
-                        <h3 class="text-xl font-extrabold text-slate-900 mb-2 uppercase">${m.titulo}</h3>
-                        <p class="text-slate-500 text-sm italic leading-relaxed">${m.descricao}</p>
-                        <div class="mt-4 flex items-center gap-2 ${isEven ? 'lg:justify-end' : 'justify-start'} text-slate-400 text-xs font-bold">
-                            <i class="fas fa-map-marker-alt"></i> ${m.local}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
-
-    timelineContainer.innerHTML = html;
-}
-
-// Chame a função no final do seu script.js
-renderizarTimeline();
 
 // Chame a função após renderizar a agenda
 renderizarAgenda();
