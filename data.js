@@ -33,8 +33,8 @@ const assembleias = [
 const mobilizacoes = [
     
     {
-        data: "27 MAR",
-        diaSemana: "Sexta - 17h",
+        data: "28 MAR",
+        diaSemana: "Sexta - 10h",
         status: "CONFIRMADO",
         statusColor: "emerald",
         titulo: "Reunião dos moradores",
