@@ -35,7 +35,7 @@ const mobilizacoes = [
     {
         data: "28 MAR",
         diaSemana: "Sábado - 10h",
-        status: "CONFIRMADO",
+        status: "Concluida",
         statusColor: "emerald",
         titulo: "Reunião dos moradores",
         local: "Salão de Festas Hotspot",
